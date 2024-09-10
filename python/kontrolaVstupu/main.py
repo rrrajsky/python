@@ -6,7 +6,7 @@
 
 while True:
     try:
-        x = int(input("Zadej cislo: "))
+        x = int(input("enter number: "))
 
     except ValueError:
         print("please enter a valid number")
