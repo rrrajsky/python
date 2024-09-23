@@ -153,5 +153,70 @@ exampleList = [1,4,5,41,8,4,"AAA", None]
 exampleList[1] = "edited" # edits objects at specified index
 print(exampleList)
 exampleList[2:4] = ["edited2", "edited3", "edited4"] # edits objects in specified range
+print(exampleList)
 
 print("set:")
+exampleSet = {1,4,5,41,8,4,"AAA", None}
+# exampleSet[1] = "edited" will break code, there is no method for editing items
+print(exampleSet)
+
+print("dictionary:")
+exampleDictionary = {"1": "one", "4": "four", "AAA": "AAAAAA", "none":None, "4": "four"}
+exampleDictionary["AAA"] = "edited" # edits object with specified key
+exampleDictionary.update({"4": "edited2"})
+print(exampleDictionary)
+
+print("string:")
+exampleString = "1,4,5,41,8,4,AAA,None"
+print(exampleString.upper()) # makes string uppercase
+print(exampleString.lower()) # makes string lowercase
+print(exampleString.strip()) # removes whitespaces from string
+print(exampleString.replace("A", "B")) # replaces first specified character with second character
+print(exampleString.split(",")) # splits the string into substrings if it finds instances of the separator
+print(exampleString)
+
+print()
+print("FINDING OBJECTS IN COLLECTIONS")
+
+print("tuple:")
+if "AAA" in exampleTuple: # checks if there's a specified object in tuple
+    print("yes, there is")
+
+print("list:")
+if "AAA" in exampleList: # checks if there's a specified object in list
+    print("yes, there is")
+
+print("set:")
+if "AAA" in exampleSet: # checks if there's a specified object in set
+    print("yes, there is")
+
+print("dictionary:")
+if "AAA" in exampleDictionary: # checks if there's a specified object in dictionary
+    print("yes, there is")
+
+print("string:")
+if "AAA" in exampleString: # checks if there's a specified object in'
+    print("yes, there is")
+
+print()
+print("ACCESSING 3rd OBJECT IN COLLECTIONS")
+
+print("tuple:")
+print(exampleTuple[2]) # prints 3rd object
+print(exampleTuple[-6]) # prints object 6 from the start, here also the 3rd one
+
+print("list:")
+print(exampleList[2]) # prints 3rd object
+print(exampleList[-7]) # prints object 7 from the start, here also the 3rd one
+
+# you cannot search for indexes in sets
+# print(exampleSet[2]) breaks the code
+
+# you cannot search for indexes in dictionaries
+# the only way to do so is changing said dictionary to a list
+# third_item = list(exampleDictionary.items())[2]
+# print(third_item)  # output: ('c', 3)
+
+print("string:")
+print(exampleString[2]) # prints 3rd object
+print(exampleString[-19]) # prints object -19 from the start, here also the 3rd one
