@@ -10,7 +10,7 @@ ACCOUNT_MIN = 10000
 ACCOUNT_MAX = 99999
 
 # Timeout v sekundách (výchozí)
-DEFAULT_TIMEOUT = 5
+DEFAULT_TIMEOUT = 600
 
 # Výchozí port, který se použije při proxy komunikaci.
 # Pozn.: Lokální server může běžet na jiném portu, avšak pro účely proxy předpokládáme, že uzly používají jednotný port.
