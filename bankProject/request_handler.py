@@ -9,6 +9,7 @@ from config import get_local_ip, DEFAULT_TIMEOUT, DEFAULT_PORT
 # Vytvoříme globální instanci banky, kterou využijeme pro všechny požadavky.
 bank = Bank()
 
+
 def proxy_command(command_line, remote_ip):
     """
     Přepošle daný příkaz na vzdálený uzel (s IP remote_ip) a vrátí jeho odpověď.
@@ -24,30 +25,35 @@ def proxy_command(command_line, remote_ip):
     except Exception as e:
         return f"ER Chyba při proxy komunikaci: {str(e)}"
 
+
 class BankRequestHandler(socketserver.StreamRequestHandler):
     """
     Obsluha příchozích TCP spojení.
     Každé spojení čeká v cyklu na příchozí příkazy, dokud klient sám nespadne či neukončí spojení.
     """
+
     def handle(self):
         self.request.settimeout(DEFAULT_TIMEOUT)
         client_ip, client_port = self.client_address
         logging.info("Připojen klient %s:%s", client_ip, client_port)
-        
+
         while True:
             try:
                 # Přečteme jeden řádek (UTF-8, odřádkování)
-                line = self.rfile.readline().decode("utf-8").strip()
-                # Pokud se klient odpojí, readline vrátí prázdný řetězec.
+                line = self.rfile.readline()
                 if not line:
                     logging.info("Klient %s:%s ukončil spojení.", client_ip, client_port)
                     break
-
+                line = line.decode("utf-8").strip()
                 logging.debug("Přijat příkaz: %s", line)
                 response = self.process_command(line)
                 # Odešleme odpověď s ukončovacím znakem nového řádku
                 self.wfile.write((response + "\n").encode("utf-8"))
                 logging.debug("Odeslána odpověď: %s", response)
+            except (ConnectionResetError, ConnectionAbortedError):
+                # Tyto výjimky naznačují, že klient spojení ukončil normálně.
+                logging.info("Klient %s:%s ukončil spojení.", client_ip, client_port)
+                break
             except socket.timeout:
                 logging.error("Timeout klienta %s:%s", client_ip, client_port)
                 break  # Ukončíme obsluhu při vypršení timeoutu
